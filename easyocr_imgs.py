@@ -72,32 +72,6 @@ def img_upload(imgx):
     df = pd.DataFrame.from_dict([dict1])
   return df
 
-#img_upload('1.png')
-
-def detect(imgx):
-  result_1 = reader.readtext(imgx,paragraph=False)
-  top_left = tuple(result_1[0][0][0])
-  bottom_right = tuple(result_1[0][0][2])
-  text = result_1[0][1]
-  font = cv2.FONT_HERSHEY_SIMPLEX
-  det_data=[]
-
-  data=[]
-  img = cv2.imread(imgx)
-  spacer = 100
-  for detection in result_1: 
-      top_left = tuple(detection[0][0])
-      bottom_right = tuple(detection[0][2])
-      text = detection[1]
-      img = cv2.rectangle(img,top_left,bottom_right,(0,255,0),3)
-      img = cv2.putText(img,text,(20,spacer), font, 0.5,(0,255,0),2,cv2.LINE_AA)
-      spacer+=15
-      data.append(detection)
-  plt.figure(figsize=(10,10))
-  plt.imshow(img)
-  plt.show()
-  
-
 
 #Streamlit block
 def streamlit():
@@ -115,7 +89,5 @@ def streamlit():
       st.write(data)
       st.image(file)
       
-  #extracted = img_upload(file)
-  #detected = detect(file)
-
+ 
 maincall = streamlit()
