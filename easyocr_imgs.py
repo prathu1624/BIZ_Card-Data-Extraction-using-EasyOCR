@@ -8,10 +8,8 @@
 
 import easyocr
 import pandas as pd
-import psycopg2
 import streamlit as st
-import cv2
-from matplotlib import pyplot as plt
+
 
 
 
