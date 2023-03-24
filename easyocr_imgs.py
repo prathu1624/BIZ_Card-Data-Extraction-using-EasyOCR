@@ -28,35 +28,47 @@ def img_upload(imgx):
     ext_data.append(i[1])
  
 
-  
-  temp = ext_data
+  addr = ''
+  c_name = ''
+  p_num = ''
   dict1 = {}
   for i in range(len(ext_data)):
-    temp_st = ext_data[i]
+    
     
     if i == 0:
-      dict1['Name'] = temp_st
+      dict1['Name'] = ext_data[i]
       
       continue
     if i == 1:
-      dict1["designation"] = temp_st
+      dict1["designation"] = ext_data[i]
       
       continue
-    if '-' in temp_st:
-      dict1["phone number"] = temp_st
+    if '-' in ext_data[i]:
+      p_num = ','.join([p_num,ext_data[i]])
+      dict1["phone_number"] = p_num[2:]
       
       continue
-    if '@' in temp_st:
-      dict1["email"] = temp_st
+    if '@' in ext_data[i]:
+      dict1["email"] = ext_data[i]
       
       continue
-    if 'www'  in temp_st:
-      dict1["website"] = temp_st
+    if 'www'  in ext_data[i]:
+      dict1["website"] = ext_data[i]
       
       continue
-    if 'WWW' in temp_st:
-      dict1['website'] = temp_st
+    if 'WWW' in ext_data[i]:
+      dict1['website'] = ext_data[i]
       continue
+    if '-' not in ext_data[i] and "@" not in ext_data[i] and "www" not in ext_data[i] and "WWW" not in ext_data[i]:
+      
+      if any(char.isdigit() for char in ext_data[i]) or "," in ext_data[i] or ";" in ext_data[i]:
+        addr = addr + ext_data[i]
+        dict1["Address"] = addr
+        continue
+      else:
+        c_name = ' '.join([c_name, ext_data[i]])
+        dict1["Company_Name"] = c_name[0:]
+      
     df = pd.DataFrame.from_dict([dict1])
   return df
 
@@ -91,7 +103,7 @@ def detect(imgx):
 def streamlit():
   st.title('BIZ_Card Data Extraction Using EasyOCR')
   st.header('Welcome to Business card data extraction by Prathamesh')
-  file = st.file_uploader("Please choose a file")
+  file = st.file_uploader("Please choose an image")
 
   if file is not None:
 
