@@ -12,7 +12,7 @@ import psycopg2
 import streamlit as st
 import cv2
 from matplotlib import pyplot as plt
-from io import StringIO 
+
 
 
 # conn = psycopg2.connect(user = "postgres", password = "pr@thu123", host = "localhost", port = "5432", database = "prathamesh")
@@ -60,7 +60,7 @@ def img_upload(imgx):
     df = pd.DataFrame.from_dict([dict1])
   return df
 
-
+#img_upload('1.png')
 
 def detect(imgx):
   result_1 = reader.readtext(imgx,paragraph=False)
@@ -84,11 +84,7 @@ def detect(imgx):
   plt.figure(figsize=(10,10))
   plt.imshow(img)
   plt.show()
-  for i in data:
-    det_data.append(i[1])
-  df1 = pd.DataFrame(det_data)
-
-  return df1
+  
 
 
 #Streamlit block
@@ -105,7 +101,9 @@ def streamlit():
 
       data = img_upload(bytes_data)
       st.write(data)
+      st.image(file)
       
-
+  #extracted = img_upload(file)
+  #detected = detect(file)
 
 maincall = streamlit()
